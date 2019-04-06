@@ -1,0 +1,63 @@
+type Usuario {
+    id: ID
+    nombre: String
+    apellido: String
+    email: String
+    descargas: Int
+    favoritos: [Favorito]
+    rol: RolUsuario
+    comentarios : [Comentario]
+}
+
+type Comentario {
+    fecha: String
+    text: String
+}
+type Favorito {
+    libro : String
+    autor : String
+}
+
+enum RolUsuario {
+    ADMIN
+    MODERADOR
+    PARTICIPANTE
+}
+
+type Query {
+    getUsuarios(limite: Int): [Usuario]
+    getUsuario(id: ID): Usuario
+}
+
+
+input FavoritosInput {
+    libro: String
+    autor: String
+}
+
+input ComentariosInput {
+    fecha: String
+    text: String
+}
+
+input UsuarioInput {
+    id: ID
+    nombre: String!
+    apellido: String!
+    email: String!
+    descargas: Int
+    favoritos: [FavoritosInput] 
+    rol: RolUsuario
+    comentarios: [ComentariosInput]
+}
+
+type Mutation {
+    #Nombre del resolver, Input con datos y el  valor que retorna
+    """ Permite la creación de nuevos usuarios en el sistema """
+    crearUsuario(input: UsuarioInput) : Usuario
+
+    """ Permite editar un usuario """
+    actualizarUsuario(input: UsuarioInput) : Usuario
+    eliminarUsuario(id: ID!) : String
+
+}
