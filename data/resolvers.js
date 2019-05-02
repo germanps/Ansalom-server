@@ -5,8 +5,8 @@ import { rejects } from 'assert';
 
 export const resolvers = {
     Query: {
-        getUsuarios : (root, {limite}) => {
-            return Usuarios.find({}).limit(limite)
+        getUsuarios : (root, {limite, offset}) => {
+            return Usuarios.find({}).limit(limite).skip(offset)
         },
         getUsuario: (root, {id}) => {
             return new Promise((resolve, object) => {
@@ -16,6 +16,14 @@ export const resolvers = {
                 });
             });
         },
+        totalUsuarios: (root) => {
+            return new Promise((resolve, object) => {
+                Usuarios.countDocuments({}, (error, count) => {
+                    if(error) rejects(error)
+                    else resolve(count)
+                });
+            })
+        }
     },
     Mutation: {
         crearUsuario : (root, {input}) => {

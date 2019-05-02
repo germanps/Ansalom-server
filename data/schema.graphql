@@ -25,8 +25,9 @@ enum RolUsuario {
 }
 
 type Query {
-    getUsuarios(limite: Int): [Usuario]
+    getUsuarios(limite: Int, offset: Int): [Usuario]
     getUsuario(id: ID): Usuario
+    totalUsuarios: String
 }
 
 
