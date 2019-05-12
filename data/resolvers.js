@@ -23,6 +23,17 @@ export const resolvers = {
                     else resolve(count)
                 });
             })
+        },
+        obtenerLibros : (root, {limite, offset}) => {
+            return Libros.find({}).limit(limite).skip(offset)
+        },
+        obtenerLibro : (root, {id}) => {
+            return new Promise((resolve, object) => {
+                Libros.findById(id, (error, libro) => {
+                    if(error) rejects(error)
+                    else resolve(libro)
+                });
+            });
         }
     },
     Mutation: {
@@ -80,6 +91,22 @@ export const resolvers = {
                     if(error) rejects(error)
                     else resolve(nuevoLibro)
                 });
+            });
+        },
+        actualizarLibro : (root, {input}) => {
+            return new Promise((resolve, libro) => {
+                Libros.findOneAndUpdate({_id :  input.id}, input, {new: true}, (error, libro) => {
+                    if(error) rejects(error)
+                    else resolve(libro)
+                });
+            });
+        },
+        eliminarLibro : (root, {id}) => {
+            return new Promise((resolve, object) => {
+                Libros.findOneAndDelete({_id: id}, (error) => {
+                    if(error) rejects(error)
+                    else resolve("Registro del libro eliminado correctamente!")
+                })
             });
         }
     }

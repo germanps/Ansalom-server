@@ -41,6 +41,10 @@ type Query {
     getUsuarios(limite: Int, offset: Int): [Usuario]
     getUsuario(id: ID): Usuario
     totalUsuarios: Int
+
+    #Libros
+    obtenerLibros(limite: Int, offset: Int): [Libro]
+    obtenerLibro(id: ID!) : Libro
 }
 
 
@@ -92,5 +96,6 @@ type Mutation {
 
     #Libros
     nuevoLibro(input: LibroInput) : Libro
-    
+    actualizarLibro(input: LibroInput) : Libro
+    eliminarLibro(id: ID!) : String
 }
