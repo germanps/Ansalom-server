@@ -8,7 +8,17 @@ type Usuario {
     rol: RolUsuario
     comentarios : [Comentario]
 }
-
+type Libro {
+    id: ID
+    titulo: String
+    autor: String
+    genero: String
+    coleccion: String
+    cover: String
+    epub: String
+    pdf: String
+    sinopsis: [Sinopsis]
+}
 type Comentario {
     fecha: String
     text: String
@@ -16,6 +26,9 @@ type Comentario {
 type Favorito {
     libro : String
     autor : String
+}
+type Sinopsis {
+    parrafo: String
 }
 
 enum RolUsuario {
@@ -52,6 +65,22 @@ input UsuarioInput {
     comentarios: [ComentariosInput]
 }
 
+input SinopsisInput {
+    parrafo: String
+}
+
+input LibroInput {
+    id: ID
+    titulo: String!
+    autor: String!
+    genero: String!
+    coleccion: String
+    cover: String!
+    epub: String!
+    pdf: String!
+    sinopsis: [SinopsisInput]
+}
+
 type Mutation {
     #Nombre del resolver, Input con datos y el  valor que retorna
     """ Permite la creación de nuevos usuarios en el sistema """
@@ -61,4 +90,7 @@ type Mutation {
     actualizarUsuario(input: UsuarioInput) : Usuario
     eliminarUsuario(id: ID!) : String
 
+    #Libros
+    nuevoLibro(input: LibroInput) : Libro
+    
 }

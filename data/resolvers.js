@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Usuarios } from './db';
+import { Usuarios, Libros } from './db';
 import { rejects } from 'assert';
 
 
@@ -26,6 +26,7 @@ export const resolvers = {
         }
     },
     Mutation: {
+        //Usuarios
         crearUsuario : (root, {input}) => {
             const nuevoUsuario = new Usuarios({
                 nombre: input.nombre,
@@ -52,7 +53,7 @@ export const resolvers = {
                 });
             });
         },
-        eliminarUsuario : (root, {id}) =>{
+        eliminarUsuario : (root, {id}) => {
             return new Promise((resolve, object) => {
                 Usuarios.findOneAndDelete({_id: id}, (error) => {
                     if(error) rejects(error)
@@ -60,6 +61,27 @@ export const resolvers = {
                 });
             });
         },
+        //Libros
+        nuevoLibro : (root, {input}) => {
+            const nuevoLibro = new Libros({
+                titulo: input.titulo,
+                autor: input.autor,
+                genero: input.genero,
+                coleccion: input.coleccion,
+                cover: input.cover,
+                epub: input.epub,
+                pdf: input.pdf,
+                sinopsis: input.sinopsis
+            });
+            //mongo crea automaticamente el _id
+            nuevoLibro.id = nuevoLibro._id;
+            return new Promise((resolve, object) => {
+                nuevoLibro.save((error) => {
+                    if(error) rejects(error)
+                    else resolve(nuevoLibro)
+                });
+            });
+        }
     }
 }
 
