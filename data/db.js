@@ -8,6 +8,7 @@ mongoose.set('setFindAndModify', false);
 const usuariosSchema = new mongoose.Schema({
     nombre: String,
     apellido: String,
+    password: String,
     email: String,
     descargas: Number,
     favoritos: Array,

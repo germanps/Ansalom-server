@@ -2,6 +2,7 @@ type Usuario {
     id: ID
     nombre: String
     apellido: String
+    password: String
     email: String
     descargas: Int
     favoritos: [Favorito]
@@ -62,6 +63,7 @@ input UsuarioInput {
     id: ID
     nombre: String!
     apellido: String!
+    password: String!
     email: String!
     descargas: Int
     favoritos: [FavoritosInput] 

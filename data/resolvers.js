@@ -38,10 +38,16 @@ export const resolvers = {
     },
     Mutation: {
         //Usuarios
-        crearUsuario : (root, {input}) => {
-            const nuevoUsuario = new Usuarios({
+        crearUsuario : async(root, {input}) => {
+            //revisar si existe el email(usuario duplicado)
+            const usuarioExistente = await Usuarios.findOne({email: input.email});
+            if(usuarioExistente){
+                throw new Error("Un usuario con el mismo email ya existe!");
+            }
+            const nuevoUsuario = await new Usuarios({
                 nombre: input.nombre,
                 apellido: input.apellido,
+                password: input.password,
                 email: input.email,
                 descargas: input.descargas,
                 favoritos: input.favoritos,
