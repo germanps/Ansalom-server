@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { Usuarios, Libros } from './db';
 import { rejects } from 'assert';
+import bcrypt from 'bcrypt';
 
 
 export const resolvers = {
@@ -77,6 +78,22 @@ export const resolvers = {
                     else resolve("Registro del usuario eliminado correctamente!")
                 });
             });
+        },
+        autenticarUsuario : async (root, {email, password}) => {
+            const emailUsuario = await Usuarios.findOne({email});
+            if(!emailUsuario) {
+                throw new Error('Usuario no encontrado');
+            }
+            
+            //comparar password que introduce el usuario con el hasheado que esta en mongo
+            const passwordCorrecto = await bcrypt.compare(password, emailUsuario.password);
+            //incorrecto
+            if(!passwordCorrecto){
+                return 'Password incorrecto';
+             }
+            if(passwordCorrecto){
+                return 'Password correcto';
+            }
         },
         //Libros
         nuevoLibro : (root, {input}) => {

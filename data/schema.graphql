@@ -37,6 +37,9 @@ enum RolUsuario {
     MODERADOR
     PARTICIPANTE
 }
+type Token {
+    token: String
+}
 
 type Query {
     getUsuarios(limite: Int, offset: Int): [Usuario]
@@ -100,4 +103,5 @@ type Mutation {
     nuevoLibro(input: LibroInput) : Libro
     actualizarLibro(input: LibroInput) : Libro
     eliminarLibro(id: ID!) : String
+    autenticarUsuario(email: String, password: String): Token
 }
