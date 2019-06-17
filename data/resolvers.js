@@ -2,6 +2,14 @@ import mongoose from 'mongoose';
 import { Usuarios, Libros } from './db';
 import { rejects } from 'assert';
 import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+
+//Generar token auth
+dotenv.config({path: 'variables.env'});
+const crearToken = (email, secreto, expiresIn) => {
+    return jwt.sign({email}, secreto, {expiresIn});
+}
 
 
 export const resolvers = {
@@ -89,10 +97,12 @@ export const resolvers = {
             const passwordCorrecto = await bcrypt.compare(password, emailUsuario.password);
             //incorrecto
             if(!passwordCorrecto){
-                return 'Password incorrecto';
-             }
-            if(passwordCorrecto){
-                return 'Password correcto';
+                console.log('throw error');
+                
+                throw new Error('Password incorrecto')
+            }
+            return {
+                token: crearToken(emailUsuario, process.env.SECRETO, '604800')//1 week
             }
         },
         //Libros
