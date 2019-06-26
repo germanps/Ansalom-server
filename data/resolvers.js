@@ -43,6 +43,15 @@ export const resolvers = {
                     else resolve(libro)
                 });
             });
+        },
+        obtenerUsuario : (root, args, {usuarioActual}) => {
+            if(!usuarioActual) {
+                return null; 
+            }
+            console.log(usuarioActual);
+            //Obtener usuario actual del request
+            const usuario = Usuarios.findOne({usuario: usuarioActual.email});
+            return usuario;
         }
     },
     Mutation: {

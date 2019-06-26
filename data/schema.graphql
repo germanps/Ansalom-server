@@ -40,6 +40,9 @@ enum RolUsuario {
 type Token {
     token: String
 }
+type UsuarioEmail {
+    email: String
+}
 
 type Query {
     getUsuarios(limite: Int, offset: Int): [Usuario]
@@ -49,6 +52,9 @@ type Query {
     #Libros
     obtenerLibros(limite: Int, offset: Int): [Libro]
     obtenerLibro(id: ID!) : Libro
+
+    #Autentificación usuarios
+    obtenerUsuario : UsuarioEmail
 }
 
 

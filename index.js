@@ -15,10 +15,12 @@ const server = new ApolloServer({
     context: async({req}) => {
         //obtener token
         const token = req.headers['authorization'];
+        console.log(token);
         if(token !== "null"){
             try {
                 //verificar el token del frontend
                 const usuarioActual = await jwt.verify(token, process.env.SECRETO);
+
                 //agregar el usuario actual al request
                 req.usuarioActual = usuarioActual;
                 return {
